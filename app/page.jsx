@@ -116,6 +116,7 @@ export default function Page() {
               </div>
 
               {/* Senator Box */}
+              {/* the double scrollbar*/}
               <div className="senator-box relative p-4 bg-[#1d4b45] rounded-lg flex-1 overflow-y-auto">
 
                 {/* Up Arrow */}
