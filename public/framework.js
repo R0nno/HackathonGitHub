@@ -1,3 +1,4 @@
+
 /*Code for the State Dropdown Menu */
 const dropdowns = document.querySelectorAll('.dropdown');
 
