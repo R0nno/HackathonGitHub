@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "clean-bill-codes": "node scripts/cleanBillCodes.js",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

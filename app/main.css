@@ -3,15 +3,16 @@
   box-sizing: border-box;
 }
 .about {
-    margin-top: -20px; /* pull it up closer */
-    padding-top: 80px; /* adjust if needed for visual space */
+    margin-top: auto; /* pull it up closer */
+    padding-top: 20px; /* adjust if needed for visual space */
+    
   }
   
 .site {
-  min-height: 100dvh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: minmax(0, 1fr);
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -106,24 +107,25 @@ header ul li a {
   transform: translateY(-50%);
   font-size: 25px;
 }
+
 .senators-box {
-    transition: background-color 0.5s ease;
-    flex: 3;
-    width: 90%;
-    background-color: #112521;
-    border-radius: 25px;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap; /* wrap to next line */
-    gap: 20px;
-    overflow-y: auto;
-    max-height: 100%;
-    justify-content: center;
+  transition: background-color 0.5s ease;
+  flex: 3;
+  width: 90%;
+  background-color: #112521;
+  border-radius: 25px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap; /* wrap to next line */
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 100%;
+  justify-content: center;
 }
   
   .senator-pill {
-    flex: 0 1 45%; /* about 45% width for 2 per row */
-    background-color: #0F2823;
+    flex: 0 1 45%; 
+    background-color: #152e29;
     padding: 15px 20px;
     border-radius: 20px;
     color: white;
@@ -135,9 +137,11 @@ header ul li a {
     gap: 5px;
   }
   
+  /*
   .senator-pill:hover {
     background-color: #1f4035;
   }
+    */
   
 .hero-content {
   /*padding-top: 2em;*/
@@ -146,32 +150,40 @@ header ul li a {
 
 /* main body text containers */
 .container {
+
   display: flex;
-  -moz-column-gap: 60px;
-       column-gap: 60px;
+  gap: 50px;
   justify-content: center;
   align-items: stretch;
   padding: 2em;
-  min-height: 86vh;
   max-width: 1500px;
   margin: 0 auto;
+
+
+  padding-bottom: 0; /* Reduce bottom padding */
+  margin-bottom: 0;  /* Ensure no extra margin at bottom */
 }
 
 .selection-box {
-  transition: background-color 0.5s ease;
-  flex: 1;
-  min-height: 400px;
-  width: 400px;
-  background-color: #224B43;
-  border-radius: 25px;
+    transition: background-color 0.5s ease;
+    flex: 1;
+    max-height: 700px;
+    width: 400px;
+    background-color: #224B43;
+    border-radius: 25px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+  
 }
 
+/*
 .simplified-bill-box {
   transition: background-color 0.5s ease;
   flex: 2;
-  min-height: 500px;
+  min-height: 400px;
   width: 1000px;
-  background-color: #224B43;
+  background-color: #FFFFFF;
   border-radius: 25px;
   display: flex;
   flex-direction: column;
@@ -181,25 +193,35 @@ header ul li a {
   padding-top: 50px;
   box-sizing: border-box;
 }
+  */
 
+  /*
 .simplified-text:hover {
   background-color: #152e29;
   transition: all 0.3s ease;
 }
+  */
 
+/* #112521 */
 .simplified-text {
   transition: all 0.5s ease;
-  min-width: 500px;
+  
   flex: 7;
   width: 90%;
   background-color: #112521;
   border-radius: 25px;
+  margin-top: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+  margin-bottom: 25px;
 }
 
+/*
 .contact-information:hover {
   background-color: #152e29;
   transition: all 0.3s ease;
 }
+  */
 
 .contact-information {
   transition: all 0.5s ease;
@@ -209,21 +231,15 @@ header ul li a {
   border-radius: 25px;
 }
 
-.about-box:hover {
-  background-color: #112521;
-  transition: all 0.3s ease;
-
-}
-
 /* about ClarifyAI section */
 .about-box {
   transition: all 0.5s ease;
-  min-height: 250px;
+  min-height: 300px;
   background-color: #1C1D21;
 }
 
 .about-box-text {
-  padding-top: 0.5em;
+  padding-top: 1.5em;
   padding-left: 2em;
 }
 
@@ -256,12 +272,19 @@ header ul li a {
     background-color: #1C1D21;
     color: white;
     border-radius: 25px;
-    padding: 10px 20px;
+    padding: 10px 40px 10px 20px;
     font-size: 20px;
     border: none;
     outline: none;
     opacity: 0.75;
     cursor: pointer;
+    height: 50px;
+  
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 30px;
   }
   
   .state-select:hover {
@@ -272,51 +295,58 @@ header ul li a {
 .right-box {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 3;
     margin-left: 20px; /* reduced */
     margin-right: 20px; /* reduced - closer to border */
     background-color: #224B43;
     border-radius: 25px;
-    padding: 20px;
-    min-height: 90%; /* adjust height nicely */
+    padding: 25px;
+    min-height: 400px;
+    max-height: 700px;
+    align-items: center;
   }
   
-  /* Big summary box */
+  /*
+  /* Big summary box 
   .summary-container {
-    flex: 2; /* bigger */
+    flex: 2;
     background-color: #112521;
     border-radius: 20px;
     padding: 20px;
-    margin-bottom: 20px; /* space between summary and senator box */
+    margin-bottom: 20px; /* space between summary and senator box 
     overflow-y: auto;
   }
+  */
   
   /* Senator box */
   .senators-box {
-    flex: 1; /* take good space */
+    flex: 3; /* take good space */
     background-color: #112521;
     border-radius: 20px;
-    padding: 20px;
+    padding: 25px;
     overflow-y: auto;
     display: flex;
     flex-wrap: wrap; /* wrap senators */
-    gap: 10px;
+    gap: 15px;
     align-items: flex-start;
+    margin-bottom: 25px;
+    
   }
   
 .tabs {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     gap: 10px;
     overflow-y: auto;
-    height: 90%;
     padding: 5px;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-  }
+    height: 100%;
   
+  }
+
   .tab {
     background-color: #0F2823;
+    color:white;
     padding: 15px;
     border-radius: 20px;
     cursor: pointer;
@@ -337,21 +367,49 @@ header ul li a {
 }/*# sourceMappingURL=main.css.map */
 /* Make the main layout responsive */
 @media (max-width: 1200px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-      row-gap: 40px;
-    }
-  
-    .selection-box,
-    .simplified-bill-box {
-      width: 90%;
-      max-width: 500px;
-    }
-  
-    .senators-box {
-      width: 90%;
-      max-width: 500px;
-    }
+  /* .container {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 40px;
+  } */
+
+  .selection-box,
+  .simplified-bill-box {
+    width: 90%;
+    max-width: 500px;
   }
+
+  .senators-box {
+    width: 90%;
+    max-width: 500px;
+  }
+}
   
+
+/* Scrollbar related things */
+  /* For WebKit browsers (Chrome, Safari, Edge) */
+
+  ::-webkit-scrollbar {
+    width: 8px; /* or 0px to hide it completely */
+    height: 8px; /* for horizontal scrollbars */
+  }
+
+::-webkit-scrollbar-track {
+  background: transparent; /* make the track background transparent */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* color of the draggable part (thumb) */
+  border-radius: 10px;
+  border: 2px solid transparent; /* space around thumb */
+}
+
+.senators-box::-webkit-scrollbar {
+  width: 8px; /* or 8px */
+  background: transparent;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+

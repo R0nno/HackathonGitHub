@@ -3,28 +3,54 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function Page() {
-  const [selectedBill, setSelectedBill] = useState(0);
+  const [selectedBillId, setSelectedBillId] = useState(null);
+  const [billSummary, setBillSummary] = useState('Select a bill to view summary.');
   const tabsRef = useRef(null);
   const senatorsRef = useRef(null);
   const upArrowRef = useRef(null);
   const downArrowRef = useRef(null);
-  const senatorUpArrowRef = useRef(null);
-  const senatorDownArrowRef = useRef(null);
-
+  
+  
   const bills = [
-    "Bill #1: Stop Logging",
-    "Bill #2: Provide Healthcare",
-    "Bill #3: Lower Taxes",
-    "Bill #4: Provide Housing",
-    "Bill #5: Address Substance Abuse",
-    "Bill #6: Enforce Littering Penalties",
-    "Bill #7: Free School Lunches",
-    "Bill #8: Create Affordable Housing",
-    "Bill #9: Build Sustainable Infrastructure",
-    "Bill #10: Support Right to Abortion",
-    "Bill #11: Help Children with Disabilities"
+    { id: "1003.SL", title: "1003.SL" },
+    { id: "1006.PL", title: "1006.PL" },
+    { id: "1006.SL", title: "1006.SL" },
+    { id: "1007.SL", title: "1007.SL" },
+    { id: "1012.PL", title: "1012.PL" },
+    { id: "1013.PL", title: "1013.PL" },
+    { id: "1014.E", title: "1014.E" },
+    { id: "1014.PL", title: "1014.PL"},
+    { id: "1018.PL", title: "1018.PL"},
+    { id: "1023-S.PL", title: "1023-S.PL"},
+    { id: "1024-S2.PL", title: "1024-S2.PL"},
+    { id: "1024-S2.SL", title: "1024-S2.SL"},
+    { id: "1028.PL", title: "1028.PL"},
+    { id: "1039.PL", title: "1039.PL"},
+    // etc.
   ];
-
+  
+  const handleBillClick = async (billCode) => {
+    setSelectedBillId(billCode);
+    try {
+      const response = await fetch('/api/getBill', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: billCode }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      setBillSummary(data.bill_summary);
+    } catch (error) {
+      console.error('Failed to fetch bill:', error.message);
+      setBillSummary('Error loading bill summary.');
+    }
+  };
+  
+  
   const senators = [
     { name: "Senator John Doe", email: "jdoe@gmail.com", phone: "425-846-9847" },
     { name: "Senator Mark Chuck", email: "mchuck@gmail.com", phone: "425-463-9374" },
@@ -34,36 +60,13 @@ export default function Page() {
   ];
   
 
-  useEffect(() => {
-    const updateArrows = (container, upArrow, downArrow) => {
-      if (!container) return;
-      upArrow.style.display = container.scrollTop > 0 ? 'block' : 'none';
-      downArrow.style.display = container.scrollTop + container.clientHeight < container.scrollHeight ? 'block' : 'none';
-    };
-
-    const tabs = tabsRef.current;
-    const senatorsList = senatorsRef.current;
-
-    if (tabs) {
-      tabs.addEventListener('scroll', () => updateArrows(tabs, upArrowRef.current, downArrowRef.current));
-      updateArrows(tabs, upArrowRef.current, downArrowRef.current);
-    }
-    if (senatorsList) {
-      senatorsList.addEventListener('scroll', () => updateArrows(senatorsList, senatorUpArrowRef.current, senatorDownArrowRef.current));
-      updateArrows(senatorsList, senatorUpArrowRef.current, senatorDownArrowRef.current);
-    }
-
-    return () => {
-      if (tabs) tabs.removeEventListener('scroll', () => {});
-      if (senatorsList) senatorsList.removeEventListener('scroll', () => {});
-    };
-  }, []);
 
   const scroll = (ref, amount) => {
     if (ref.current) {
       ref.current.scrollBy({ top: amount, behavior: 'smooth' });
     }
   };
+  console.log('Current billSummary:', billSummary);
 
   return (
     <>
@@ -73,76 +76,47 @@ export default function Page() {
           <div className="container">
 
             {/* Left Column - Bill Selection */}
-            <div className="selection-box p-4 flex flex-col gap-2 relative">
-              <div className="slider relative">
 
-                {/* Up Arrow */}
-                <div ref={upArrowRef} className="arrow-button" style={{ top: '10px' }} onClick={() => scroll(tabsRef, -150)}>
-                  ↑
-                </div>
+        <div className="selection-box p-4 flex flex-col gap-2 relative" style={{ height: '700px' }}>
+            <ul ref={tabsRef} className="tabs flex flex-col gap-2 overflow-y-auto">
+            {bills.map((bill, index) => (
+                <li
+                key={bill.id}
+                onClick={() => handleBillClick(bill.id)}
+                className={`tab rounded-xl text-center p-3 cursor-pointer ${selectedBillId === bill.id ? 'active-glow' : ''}`}
+                >
+                {bill.title}
+                </li>
+            ))}
+            </ul>
+        </div>
 
-                {/* Bill List */}
-                <div className="bill-list-container overflow-y-auto no-scrollbar mt-12 mb-12 w-full px-2" style={{ maxHeight: 'calc(100% - 100px)' }}>
-                  <ul ref={tabsRef} className="tabs flex flex-col gap-2">
-                    {bills.map((bill, index) => (
-                      <li
-                        key={index}
-                        onClick={() => setSelectedBill(index)}
-                        className={`tab rounded-xl text-center p-3 cursor-pointer ${selectedBill === index ? 'active-glow' : ''}`}
-                      >
-                        {bill}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Down Arrow */}
-                <div ref={downArrowRef} className="arrow-button" style={{ bottom: '10px' }} onClick={() => scroll(tabsRef, 150)}>
-                  ↓
-                </div>
-
-              </div>
-            </div>
 
             {/* Right Column - Simplified Text and Senators */}
-            <div className="right-box flex flex-col gap-4">
+            <div className="right-box flex flex-col gap-4 ">
 
-              {/* Simplified Bill Box */}
-              <div className="simplified-bill-box bg-[#1d4b45] p-6 rounded-lg">
-                <div className="simplified-text text-white">
-                  {/* Simplified bill content */}
-                  <p>Summary of the bill will appear here after selection.</p>
-                </div>
+{/* Simplified Bill Box */}
+<div className="simplified-text text-white bg-[#1d4b45] p-6 px-8 rounded-lg w-full min-h-[300px] max-h-[500px] overflow-y-auto">
+  {/* Simplified bill content */}
+  <div className="bill-summary">
+  <p>{billSummary || 'Select a bill to view the summary.'}</p>
+  </div>
+
+
+    
               </div>
 
               {/* Senator Box */}
               {/* the double scrollbar*/}
-              <div className="senator-box relative p-4 bg-[#1d4b45] rounded-lg flex-1 overflow-y-auto">
-
-                {/* Up Arrow */}
-                <div ref={senatorUpArrowRef} className="arrow-button" style={{ top: '10px' }} onClick={() => scroll(senatorsRef, -150)}>
-                  ↑
+                          <div className="senators-box flex-2 " ref={senatorsRef} >
+              {senators.map((senator, index) => (
+                <div key={index} className="senator-pill">
+                  <strong>{senator.name}</strong>
+                  <span>{senator.email}</span>
+                  <span>{senator.phone}</span>
                 </div>
-
-                {/* Senator List */}
-                    <div className="senators-box" ref={senatorsRef}>
-                        {senators.map((senator, index) => (
-                        <div key={index} className="senator-pill">
-                        <strong>{senator.name}</strong>
-                        <span>{senator.email}</span>
-                        <span>{senator.phone}</span>
-                    </div>
-                 ))}
-                </div>
-
-
-
-                {/* Down Arrow */}
-                <div ref={senatorDownArrowRef} className="arrow-button" style={{ bottom: '10px' }} onClick={() => scroll(senatorsRef, 150)}>
-                  ↓
-                </div>
-
-              </div>
+              ))}
+            </div>
 
             </div>
 
