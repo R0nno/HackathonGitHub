@@ -1,5 +1,5 @@
 import '../globals.css';
-import './main.css'; // Your new main styling
+import './main.css'; 
 import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '700'] });
@@ -12,6 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={montserrat.className}>
+      <head>
+        <link rel="icon" href="/public/images/clarigylogo3.svg" type="image/svg+xml"/>
+      </head>
       <body>
         <div className="waves"></div>
         {/* Waves Background */}
@@ -25,21 +28,21 @@ export default function RootLayout({ children }) {
             <div className="wrapper">
               <header>
                 <a href="#" className="logo flex items-center gap-2">
-                  <img
-                    src="/images/clarifylogo3.svg"
-                    alt="ClarifyAI Logo"
-                    className="h-10"
-                  />
-                  <span className="text-5xl font-bold relative bottom-2 left-1">
-                    ClarifyAI
-                  </span>
+                <img
+                  src="/images/clarifylogo3.svg"
+                  alt="ClarifyAI Logo"
+                  className="h-10"
+                />
+                <span className="text-5xl font-bold">
+                  ClarifyAI
+                </span>
                 </a>
               </header>
             </div>
 
             {/* State Button */}
             <div className="state-dropdown">
-                <select className='state-select'>
+                <select className='state-select' defaultValue="WA">
                     {[
                         "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
                         "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
@@ -65,10 +68,7 @@ export default function RootLayout({ children }) {
                 <h1 className="text-4xl font-bold mb-4">About ClarifyAI</h1>
                 <div className="ClarifyAI-text">
                   <p className="text-lg leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Quisque faucibus ex sapien vitae pellentesque sem placerat. 
-                    In id cursus mi pretium tellus duis convallis. 
-                    Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
+                  ClarifyAI's mission is to make legislation easy to read, understand, and act on. We firmly believe that Americans deserve clear, accessible information about the laws being passed in their given state. Through our digestable, unbiased summaries of bills, we empower citizens of all ages to stay informed and engage with their communities.
                   </p>
                 </div>
               </div>
